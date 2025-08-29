@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Guild Studio</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #212121;
+      color: #eaeaea;
+      max-width: 480px;
+      margin: auto;
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #212122;
+      padding: 10px 15px;
+    }
+
+    nav img {
+      height: 40px;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      cursor: pointer;
+    }
+
+    .hamburger input {
+      display: none;
+    }
+
+    .hamburger svg {
+      height: 2em;
+      transition: transform 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .line {
+      fill: none;
+      stroke: #ff0000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 3;
+      transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+        stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .line-top-bottom {
+      stroke-dasharray: 12 63;
+    }
+
+    .hamburger input:checked + svg {
+      transform: rotate(-45deg);
+    }
+
+    .hamburger input:checked + svg .line-top-bottom {
+      stroke-dasharray: 20 300;
+      stroke-dashoffset: -32.42;
+    }
+
+    /* Header */
+    header img {
+      width: 100%;
+      display: block;
+    }
+
+    /* Cards Section */
+    .cards-container {
+      position: relative;
+      margin: 20px 0;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .flip-card {
+      background-color: transparent;
+      width: 80%;
+      aspect-ratio: 16/9;
+      max-width: 320px;
+      perspective: 1000px;
+      transition: opacity 0.4s ease;
+    }
+
+    .flip-card.fade {
+      opacity: 0;
+    }
+
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flip-card-front, .flip-card-back {
+      box-shadow: 0 8px 14px 0 rgba(0,0,0,0.4);
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border: 2px solid #ff0000;
+      border-radius: 1rem;
+      padding: 15px;
+      overflow-y: auto;
+    }
+
+    .flip-card-front {
+      background: #212121;
+      color: #eaeaea;
+    }
+
+    .flip-card-back {
+      background: #ff0000;
+      color: #eaeaea;
+      transform: rotateY(180deg);
+    }
+
+    .title {
+      font-size: 1.1em;
+      font-weight: 900;
+      margin-bottom: 10px;
+      color: #ff0000;
+    }
+
+    /* Tombol navigasi */
+    .nav-btn {
+      background: transparent;
+      border: 2px solid #ff0000;
+      color: #eaeaea;
+      font-size: 1.5em;
+      cursor: pointer;
+      padding: 4px 10px;
+      border-radius: 8px;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: #ff0000;
+      color: #eaeaea;
+      transform: scale(1.1);
+    }
+
+    /* Media Section */
+    .media {
+      text-align: center;
+      margin: 30px 0;
+      padding: 10px;
+    }
+
+    .media h2 {
+      margin-bottom: 15px;
+      color: #ff0000;
+      font-size: 1.2em;
+    }
+
+    .media-icons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .media-icons a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px;
+      border: 2px solid #ff0000;
+      border-radius: 10px;
+      text-decoration: none;
+      color: #eaeaea;
+      background: #212121;
+      transition: all 0.3s;
+      font-size: 0.95em;
+    }
+
+    .media-icons a i {
+      font-size: 1.2em;
+    }
+
+    .media-icons a:hover {
+      background: #ff0000;
+      color: #eaeaea;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <img src="logo.png" alt="Logo">
+    <label class="hamburger">
+      <input type="checkbox">
+      <svg viewBox="0 0 32 32">
+        <path class="line line-top-bottom" d="M4 8h24M4 24h24"></path>
+        <path class="line" d="M4 16h24"></path>
+      </svg>
+    </label>
+  </nav>
+
+  <!-- Header -->
+  <header>
+    <img src="selamat-datang.jpg" alt="Selamat Datang">
+  </header>
+
+  <!-- Flip Cards Section -->
+  <section class="cards-container">
+    <button class="nav-btn nav-left" onclick="prevCard()"><</button>
+
+    <div class="flip-card" id="flip-card">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <p class="title" id="card-title">Tentang Kami</p>
+          <p id="card-front">Hover atau klik untuk lihat detail</p>
+        </div>
+        <div class="flip-card-back">
+          <p class="title">Detail</p>
+          <p id="card-back">...</p>
+        </div>
+      </div>
+    </div>
+
+    <button class="nav-btn nav-right" onclick="nextCard()">></button>
+  </section>
+
+  <!-- Media Section -->
+  <section class="media">
+    <h2>Temukan Kami</h2>
+    <div class="media-icons">
+      <a href="https://youtube.com/@guildstudio-id?si=AxG6-XuPG1WprJnW" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+      <a href="https://www.tiktok.com/@guildstudio.id?_t=ZS-8zHaZj5eVE5&_r=1" target="_blank"><i class="fab fa-tiktok"></i> TikTok</a>
+      <a href="https://www.instagram.com/guildstudio.id?utm_source=qr&igsh=MWw3aThpZHU5azNvdw==" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="https://wa.me/message/LQDGVCHXO3W2O1" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      <a href="" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
+      <a href="" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+      <a href="" target="_blank"><i class="fab fa-discord"></i> Discord</a>
+      <a href="https://tk.tokopedia.com/ZSAxWH1Hp/" target="_blank"><i class="fas fa-store"></i> Tokopedia</a>
+      <a href="" target="_blank"><i class="fas fa-shopping-bag"></i> Shopee</a>
+    </div>
+  </section>
+
+  <script>
+    const cards = [
+      { 
+        title: "Tentang Kami", 
+        front: "Hover atau klik untuk lihat detail", 
+        back: "GuildStudio adalah ruang kolaborasi kreatif yang berfungsi layaknya sebuah guild — tempat para anggota dengan beragam keahlian berkumpul, bekerja sama, dan saling mendukung. Di sini, ide-ide kreatif dikembangkan bersama, dijadikan nyata, dan terus disempurnakan melalui kolaborasi para ahli." 
+      },
+      { 
+        title: "Visi", 
+        front: "Hover atau klik untuk lihat detail", 
+        back: "Menjadi partner kreatif yang menghadirkan solusi inovatif dan menyeluruh melalui kolaborasi anggota GuildStudio." 
+      },
+      { 
+        title: "Misi", 
+        front: "Hover atau klik untuk lihat detail", 
+        back: "1. Membangun kolaborasi yang kuat antar anggota dengan keahlian berbeda.\n\n2. Mengembangkan ide kreatif menjadi karya nyata, baik fisik maupun digital.\n\n3. Menjaga kualitas, detail, dan estetika setiap proyek melalui proses yang kolaboratif.\n\n4. Menerapkan komunikasi terbuka dan profesional untuk memastikan semua hasil selaras dengan tujuan bersama." 
+      }
+    ];
+
+    let current = 0;
+
+    function showCard(index) {
+      const card = document.getElementById("flip-card");
+      card.classList.add("fade");
+
+      setTimeout(() => {
+        document.getElementById("card-title").innerText = cards[index].title;
+        document.getElementById("card-front").innerText = cards[index].front;
+        document.getElementById("card-back").innerText = cards[index].back;
+        card.classList.remove("fade");
+      }, 400);
+    }
+
+    function prevCard() {
+      current = (current - 1 + cards.length) % cards.length;
+      showCard(current);
+    }
+
+    function nextCard() {
+      current = (current + 1) % cards.length;
+      showCard(current);
+    }
+
+    showCard(current);
+  </script>
+</body>
+</html>
